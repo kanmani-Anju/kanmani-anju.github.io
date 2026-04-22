@@ -7,12 +7,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "postbuild": "node scripts/copy-404.cjs",
     "build:gh": "vite build --base=/",
     "preview": "vite preview",
     "preview:gh": "vite preview --base=/",
     "deploy": "npm run build:gh && gh-pages -d dist",
     "git:diagnose": "powershell -ExecutionPolicy Bypass -File ./scripts/diagnose-push.ps1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "ci": "npm run build && npm run lint"
+  },
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.4",

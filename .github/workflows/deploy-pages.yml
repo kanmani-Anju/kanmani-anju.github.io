@@ -1,10 +1,11 @@
-# Builds the Vite app and deploys ./dist to GitHub Pages.
-# After the first successful run, set: Repo → Settings → Pages → Build and deployment → Source: GitHub Actions
+# Builds Vite output to ./dist and publishes to GitHub Pages.
+# Repo → Settings → Pages → Source: GitHub Actions (required once).
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -19,17 +20,30 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '20'
           cache: npm
 
-      - run: npm ci
-      - run: npm run build
+      - name: Install
+        run: npm ci
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Build
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          test -f dist/index.html
+          test -f dist/404.html
+          test -d dist/assets
+          test -n "$(find dist/assets -name '*.js' | head -1)"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
@@ -40,5 +54,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
