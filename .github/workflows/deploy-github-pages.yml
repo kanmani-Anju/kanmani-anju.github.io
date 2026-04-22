@@ -1,6 +1,5 @@
-# GitHub Pages: user/org site (<name>.github.io) uses base "/".
-# Project pages (<user>.github.io/<repo>/) uses base "/<repo>/".
-# Repo Settings → Pages → Source: GitHub Actions.
+# GitHub Pages — enable: Repo Settings → Pages → Source: GitHub Actions.
+# First run: Settings → Environments → github-pages → required reviewers (optional).
 
 name: Deploy to GitHub Pages
 
@@ -16,13 +15,15 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/configure-pages@v5
 
       - uses: actions/setup-node@v4
         with:
@@ -32,9 +33,15 @@ jobs:
       - run: npm ci
 
       - name: Build
-        env:
-          VITE_BASE_PATH: ${{ endsWith(github.event.repository.name, '.github.io') && '/' || format('/{0}/', github.event.repository.name) }}
-        run: npm run build
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
+          if [[ "$REPO_NAME" == *.github.io ]]; then
+            export VITE_BASE_PATH=/
+          else
+            export VITE_BASE_PATH="/${REPO_NAME}/"
+          fi
+          echo "VITE_BASE_PATH=$VITE_BASE_PATH"
+          npm run build
 
       - uses: actions/upload-pages-artifact@v3
         with:
