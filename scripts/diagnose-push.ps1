@@ -17,7 +17,12 @@ git config --global credential.helper 2>$null
 git config credential.helper 2>$null
 
 Log "`n[3] GitHub CLI" Cyan
-try { gh auth status 2>&1 } catch { Log "gh not available or not logged in" Yellow }
+$gh = Get-Command gh -ErrorAction SilentlyContinue
+if (-not $gh) { Log "gh CLI not installed (optional)" Gray }
+else {
+  $ghStatus = & gh auth status 2>&1 | Out-String
+  if ($LASTEXITCODE -eq 0) { Log $ghStatus Green } else { Log ($ghStatus.Trim()) Yellow }
+}
 
 Log "`n[4] Env (tokens)" Cyan
 Log ("GITHUB_TOKEN: " + ($(if ($env:GITHUB_TOKEN) { "set (len $($env:GITHUB_TOKEN.Length))" } else { "not set" })))
@@ -27,12 +32,12 @@ Log "`n[5] Windows cmdkey (git/github)" Cyan
 cmdkey /list 2>$null | Select-String -Pattern "git|GitHub" -CaseSensitive:$false
 
 Log "`n[6] SSH GitHub (batch)" Cyan
-$sshOut = ssh -o BatchMode=yes -o ConnectTimeout=5 -T git@github.com 2>&1
-Log ($sshOut | Out-String) Gray
+$sshOut = (& ssh -o BatchMode=yes -o ConnectTimeout=5 -T git@github.com 2>&1 | Out-String).Trim()
+Log $(if ($sshOut) { $sshOut } else { "(no output)" }) Gray
 
-Log "`n[7] Test push (expect 403 if wrong account)" Cyan
-$pushOut = git push -u origin main 2>&1
-Log ($pushOut | Out-String) $(if ($LASTEXITCODE -eq 0) { "Green" } else { "Yellow" })
+Log "`n[7] Test push (dry: pushes only if you have unpulled commits)" Cyan
+$pushOut = (& git push -u origin main 2>&1 | Out-String).Trim()
+Log $pushOut $(if ($LASTEXITCODE -eq 0) { "Green" } else { "Yellow" })
 Log "git push exit: $LASTEXITCODE" $(if ($LASTEXITCODE -eq 0) { "Green" } else { "Red" })
 
 Log "`n========== NEXT STEPS ==========" Cyan
