@@ -70,6 +70,8 @@ export const COPY = {
   /** Site footer; {brand} is replaced with BRAND from this file */
   footerLine:
     'Made with care and with all my love by {brand} — for Kanmani. Tap anywhere for little hearts 💖',
+  /** Second line under the footer (original / personal note) */
+  footerLineOwn: 'No more copy — this is my own.',
   whyDailyLabel: 'Why I love you · today',
 } as const
 

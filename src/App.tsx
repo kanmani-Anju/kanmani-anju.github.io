@@ -731,7 +731,8 @@ export default function App() {
       </main>
 
       <footer className={`relative z-10 pb-10 text-center text-xs leading-relaxed ${muted}`}>
-        {COPY.footerLine.replace('{brand}', BRAND)}
+        <p>{COPY.footerLine.replace('{brand}', BRAND)}</p>
+        <p className="mt-1.5 opacity-90">{COPY.footerLineOwn}</p>
       </footer>
 
       <AnimatePresence>
