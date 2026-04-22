@@ -14,7 +14,7 @@
     "deploy": "npm run build:gh && gh-pages -d dist",
     "git:diagnose": "powershell -ExecutionPolicy Bypass -File ./scripts/diagnose-push.ps1",
     "lint": "eslint .",
-    "ci": "npm run build && npm run lint"
+    "ci": "npm run lint && npm run build"
   },
   "engines": {
     "node": ">=20"

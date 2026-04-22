@@ -34,9 +34,14 @@ function CupidSideComponent({ isNight }: Props) {
   const uid = useId().replace(/:/g, '')
   const dressGrad = `cupid-dress-${uid}`
   const wingGrad = `cupid-wing-${uid}`
+  const wingGradBack = `cupid-wing-back-${uid}`
   const skin = isNight ? '#fcd5c0' : '#ffdfc9'
   const skinStroke = isNight ? '#b8957a' : '#f0bfa8'
   const blush = isNight ? '#f9a8c0' : '#ff9eb5'
+  const hairDark = isNight ? '#3d2418' : '#4a3020'
+  const hairMid = isNight ? '#523028' : '#6b4423'
+  const hairLight = isNight ? '#6b483c' : '#8b5a3c'
+  const hairStroke = isNight ? '#2a1810' : '#3d2818'
 
   const beaconRef = useRef<HTMLDivElement>(null)
   const anchorRef = useRef<Pt>({ cx: 0, cy: 0 })
@@ -225,9 +230,18 @@ function CupidSideComponent({ isNight }: Props) {
                 <stop offset="45%" stopColor="#fffafd" />
                 <stop offset="100%" stopColor="#f5f0ff" />
               </linearGradient>
-              <linearGradient id={wingGrad} x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fffefb" />
-                <stop offset="100%" stopColor="#ffd6e8" />
+              <linearGradient id={wingGrad} x1="15%" y1="0%" x2="85%" y2="100%">
+                <stop offset="0%" stopColor="#ffffff" />
+                <stop offset="28%" stopColor="#fff5f9" />
+                <stop offset="52%" stopColor="#fce7f3" />
+                <stop offset="78%" stopColor="#fbcfe8" />
+                <stop offset="100%" stopColor="#f0abfc" />
+              </linearGradient>
+              <linearGradient id={wingGradBack} x1="100%" y1="15%" x2="0%" y2="95%">
+                <stop offset="0%" stopColor="#fdf2f8" />
+                <stop offset="40%" stopColor="#fbcfe8" />
+                <stop offset="72%" stopColor="#f9a8d4" />
+                <stop offset="100%" stopColor="#e879a9" />
               </linearGradient>
             </defs>
 
@@ -236,123 +250,170 @@ function CupidSideComponent({ isNight }: Props) {
               animate={{ rotate: [0, 2, 0] }}
               transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
             >
-              <motion.path
-                d="M 56 74 C 32 68 10 82 8 108 C 22 96 42 88 54 82 Z"
-                fill={`url(#${wingGrad})`}
-                stroke={isNight ? '#6b4a60' : '#f9a8d4'}
-                strokeWidth="0.65"
-                strokeLinejoin="round"
+              <motion.g
                 style={{ transformOrigin: '54px 80px' }}
                 animate={{ rotate: [0, 12, 0] }}
                 transition={{ duration: 1.05, repeat: Infinity, ease: 'easeInOut' }}
-              />
-              <motion.path
-                d="M 64 74 C 88 68 110 82 112 108 C 98 96 78 88 66 82 Z"
-                fill={`url(#${wingGrad})`}
-                stroke={isNight ? '#6b4a60' : '#f9a8d4'}
-                strokeWidth="0.65"
-                strokeLinejoin="round"
+              >
+                <path
+                  d="M 58 74 C 38 68 12 78 6 100 C 4 108 8 118 14 116 C 22 108 36 92 50 84 C 54 81 57 76 58 74 Z"
+                  fill={`url(#${wingGradBack})`}
+                  stroke={isNight ? '#7c5a6e' : '#f472b6'}
+                  strokeWidth="0.5"
+                  strokeLinejoin="round"
+                  opacity={isNight ? 0.72 : 0.88}
+                />
+                <path
+                  d="M 56 76 C 44 74 30 78 22 86 C 14 94 10 104 12 110 C 16 108 24 100 32 94 C 40 88 48 83 54 80 C 55.5 78.5 56 76 56 76 Z"
+                  fill={`url(#${wingGrad})`}
+                  stroke={isNight ? '#8b6b85' : '#f9a8d4'}
+                  strokeWidth="0.55"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M 52 80 Q 38 88 24 100 M 48 78 Q 36 86 28 96"
+                  fill="none"
+                  stroke={isNight ? '#fce7f3' : '#ffffff'}
+                  strokeWidth="0.38"
+                  strokeLinecap="round"
+                  opacity="0.45"
+                />
+              </motion.g>
+              <motion.g
                 style={{ transformOrigin: '66px 80px' }}
                 animate={{ rotate: [0, -12, 0] }}
                 transition={{ duration: 1.05, repeat: Infinity, ease: 'easeInOut' }}
-              />
+              >
+                <path
+                  d="M 62 74 C 82 68 108 78 114 100 C 116 108 112 118 106 116 C 98 108 84 92 70 84 C 66 81 63 76 62 74 Z"
+                  fill={`url(#${wingGradBack})`}
+                  stroke={isNight ? '#7c5a6e' : '#f472b6'}
+                  strokeWidth="0.5"
+                  strokeLinejoin="round"
+                  opacity={isNight ? 0.72 : 0.88}
+                />
+                <path
+                  d="M 64 76 C 76 74 90 78 98 86 C 106 94 110 104 108 110 C 104 108 96 100 88 94 C 80 88 72 83 66 80 C 64.5 78.5 64 76 64 76 Z"
+                  fill={`url(#${wingGrad})`}
+                  stroke={isNight ? '#8b6b85' : '#f9a8d4'}
+                  strokeWidth="0.55"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M 68 80 Q 82 88 96 100 M 72 78 Q 84 86 92 96"
+                  fill="none"
+                  stroke={isNight ? '#fce7f3' : '#ffffff'}
+                  strokeWidth="0.38"
+                  strokeLinecap="round"
+                  opacity="0.45"
+                />
+              </motion.g>
             </motion.g>
 
-            <ellipse cx="52" cy="124" rx="9" ry="11" fill={skin} stroke={skinStroke} strokeWidth="0.6" />
-            <ellipse cx="68" cy="124" rx="9" ry="11" fill={skin} stroke={skinStroke} strokeWidth="0.6" />
-            <ellipse cx="50" cy="136" rx="7" ry="4.5" fill={skin} stroke={skinStroke} strokeWidth="0.5" />
-            <ellipse cx="70" cy="136" rx="7" ry="4.5" fill={skin} stroke={skinStroke} strokeWidth="0.5" />
+            <ellipse cx="51" cy="126" rx="10" ry="12" fill={skin} stroke={skinStroke} strokeWidth="0.65" />
+            <ellipse cx="69" cy="126" rx="10" ry="12" fill={skin} stroke={skinStroke} strokeWidth="0.65" />
+            <ellipse cx="49" cy="139" rx="8" ry="5" fill={skin} stroke={skinStroke} strokeWidth="0.55" />
+            <ellipse cx="71" cy="139" rx="8" ry="5" fill={skin} stroke={skinStroke} strokeWidth="0.55" />
 
             <motion.g
-              style={{ transformOrigin: '60px 88px' }}
+              style={{ transformOrigin: '60px 92px' }}
               animate={{ rotate: [0, 2.5, -1.5, 0] }}
               transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
             >
               <path
-                d="M 44 64 Q 38 82 37 100 Q 44 114 60 118 Q 76 114 83 100 Q 82 82 76 64 Q 60 58 44 64 Z"
+                d="M 42 66 C 38 78 36 94 38 104 C 42 116 52 122 60 123 C 68 122 78 116 82 104 C 84 94 82 78 78 66 C 72 61 66 59 60 59 C 54 59 48 61 42 66 Z"
                 fill={`url(#${dressGrad})`}
                 stroke={isNight ? '#7c6b8a' : '#e9d5ff'}
-                strokeWidth="0.7"
+                strokeWidth="0.75"
                 strokeLinejoin="round"
               />
               <path
-                d="M 42 98 Q 60 108 78 98"
+                d="M 40 100 Q 60 112 80 100"
                 stroke={isNight ? '#9b8ab0' : '#ddd6fe'}
-                strokeWidth="0.55"
+                strokeWidth="0.6"
                 strokeLinecap="round"
                 opacity="0.75"
               />
               <path
-                d="M 38 102 Q 44 108 50 104 Q 56 110 60 106 Q 64 110 70 104 Q 76 108 82 102"
+                d="M 36 104 Q 44 112 52 108 Q 60 114 68 108 Q 76 112 84 104"
                 fill="none"
                 stroke={isNight ? '#a89bb8' : '#ffffff'}
-                strokeWidth="0.9"
+                strokeWidth="0.95"
                 strokeLinecap="round"
                 opacity="0.9"
               />
             </motion.g>
 
             <path
-              d="M 44 66 Q 28 74 24 88"
+              d="M 46 68 Q 30 78 24 92"
               stroke={skin}
-              strokeWidth="7.5"
+              strokeWidth="9"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="23" cy="90" r="5" fill={skin} stroke={skinStroke} strokeWidth="0.5" />
+            <circle cx="22" cy="93" r="5.5" fill={skin} stroke={skinStroke} strokeWidth="0.55" />
 
             <motion.g
-              style={{ transformOrigin: '84px 72px' }}
+              style={{ transformOrigin: '86px 74px' }}
               animate={{ rotate: [0, -8, 3, 0] }}
               transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
             >
               <path
-                d="M 74 68 Q 90 58 106 66 Q 90 76 74 68"
+                d="M 76 70 Q 92 60 108 68 Q 92 78 76 70"
                 fill="none"
                 stroke="#a16207"
                 strokeWidth="2"
                 strokeLinecap="round"
               />
-              <line x1="78" y1="68" x2="102" y2="66" stroke="#6b4423" strokeWidth="0.55" opacity="0.9" />
-              <path d="M 72 66 L 76 72 M 104 64 L 108 70" stroke="#c2410c" strokeWidth="1.6" strokeLinecap="round" />
-              <path d="M 78 70 L 68 82" stroke={skin} strokeWidth="7" strokeLinecap="round" />
-              <circle cx="67" cy="84" r="5" fill={skin} stroke={skinStroke} strokeWidth="0.5" />
+              <line x1="80" y1="70" x2="104" y2="68" stroke="#6b4423" strokeWidth="0.55" opacity="0.9" />
+              <path d="M 74 68 L 78 74 M 106 66 L 110 72" stroke="#c2410c" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M 80 72 L 70 84" stroke={skin} strokeWidth="8" strokeLinecap="round" />
+              <circle cx="69" cy="86" r="5.5" fill={skin} stroke={skinStroke} strokeWidth="0.55" />
             </motion.g>
 
-            <circle cx="60" cy="44" r="21" fill={skin} stroke={skinStroke} strokeWidth="0.85" />
-            <circle cx="45" cy="50" r="5" fill={blush} opacity="0.45" />
-            <circle cx="75" cy="50" r="5" fill={blush} opacity="0.45" />
-            <ellipse cx="52" cy="42" rx="4.2" ry="5" fill="#2d2640" />
-            <ellipse cx="68" cy="42" rx="4.2" ry="5" fill="#2d2640" />
-            <ellipse cx="53.5" cy="40" rx="1.5" ry="1.8" fill="#ffffff" opacity="0.95" />
-            <ellipse cx="69.5" cy="40" rx="1.5" ry="1.8" fill="#ffffff" opacity="0.95" />
-            <circle cx="51" cy="44" r="0.9" fill="#ffffff" opacity="0.5" />
-            <circle cx="67" cy="44" r="0.9" fill="#ffffff" opacity="0.5" />
-            <ellipse cx="60" cy="48" rx="2" ry="1.5" fill={isNight ? '#e8b4a0' : '#ffc4b0'} opacity="0.7" />
+            {/* Curly hair — ringlets around the crown */}
+            <g stroke={hairStroke} strokeWidth="0.42" strokeLinejoin="round">
+              <path
+                d="M 38 52 C 35 34 44 19 60 14 C 76 19 85 34 82 52 C 78 47 70 44 60 44 C 50 44 42 47 38 52 Z"
+                fill={hairDark}
+                opacity="0.94"
+              />
+              <ellipse cx="47" cy="22" rx="6.2" ry="7.5" fill={hairMid} transform="rotate(-22 47 22)" />
+              <ellipse cx="57" cy="16" rx="6.6" ry="8" fill={hairDark} transform="rotate(-5 57 16)" />
+              <ellipse cx="69" cy="16" rx="6.6" ry="8" fill={hairMid} transform="rotate(7 69 16)" />
+              <ellipse cx="79" cy="22" rx="6.2" ry="7.5" fill={hairDark} transform="rotate(24 79 22)" />
+              <ellipse cx="60" cy="12" rx="6" ry="7.5" fill={hairLight} />
+              <ellipse cx="41" cy="32" rx="5.5" ry="7" fill={hairDark} transform="rotate(-40 41 32)" />
+              <ellipse cx="79" cy="32" rx="5.5" ry="7" fill={hairMid} transform="rotate(40 79 32)" />
+              <ellipse cx="33" cy="42" rx="5" ry="6.5" fill={hairDark} transform="rotate(-52 33 42)" />
+              <ellipse cx="87" cy="42" rx="5" ry="6.5" fill={hairMid} transform="rotate(52 87 42)" />
+              <ellipse cx="52" cy="38" rx="4.5" ry="5.5" fill={hairLight} opacity="0.85" transform="rotate(-12 52 38)" />
+              <ellipse cx="68" cy="38" rx="4.5" ry="5.5" fill={hairLight} opacity="0.85" transform="rotate(12 68 38)" />
+            </g>
+
+            <ellipse cx="60" cy="48" rx="24" ry="22" fill={skin} stroke={skinStroke} strokeWidth="0.95" />
+            <circle cx="42" cy="54" r="6" fill={blush} opacity="0.42" />
+            <circle cx="78" cy="54" r="6" fill={blush} opacity="0.42" />
+            <ellipse cx="48.5" cy="46" rx="5.8" ry="6.5" fill="#2d2640" />
+            <ellipse cx="71.5" cy="46" rx="5.8" ry="6.5" fill="#2d2640" />
+            <ellipse cx="50" cy="43.5" rx="2" ry="2.3" fill="#ffffff" opacity="0.96" />
+            <ellipse cx="73" cy="43.5" rx="2" ry="2.3" fill="#ffffff" opacity="0.96" />
+            <circle cx="47.5" cy="47.5" r="1.1" fill="#ffffff" opacity="0.55" />
+            <circle cx="70.5" cy="47.5" r="1.1" fill="#ffffff" opacity="0.55" />
+            <ellipse cx="60" cy="51" rx="2.2" ry="1.6" fill={isNight ? '#e8b4a0' : '#ffc4b0'} opacity="0.72" />
             <path
-              d="M 52 54 Q 60 60 68 54"
+              d="M 50 57 Q 60 64 70 57"
               stroke="#e879a9"
-              strokeWidth="1.1"
+              strokeWidth="1.25"
               strokeLinecap="round"
               fill="none"
-            />
-            <path
-              d="M 52 26 Q 60 18 68 26 Q 64 22 60 24 Q 56 22 52 26"
-              fill={isNight ? '#4a3728' : '#6d4c41'}
-            />
-            <path
-              d="M 46 30 Q 60 22 74 30"
-              fill="none"
-              stroke={isNight ? '#4a3728' : '#6d4c41'}
-              strokeWidth="3"
-              strokeLinecap="round"
             />
 
             <motion.ellipse
               cx="60"
-              cy="14"
-              rx="18"
-              ry="4.5"
+              cy="13"
+              rx="20"
+              ry="5"
               fill="none"
               stroke={isNight ? '#fde68a' : '#fbbf24'}
               strokeWidth="1.3"

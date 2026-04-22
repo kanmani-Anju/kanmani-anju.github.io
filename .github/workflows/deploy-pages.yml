@@ -1,10 +1,11 @@
-# Builds Vite output to ./dist and publishes to GitHub Pages.
-# Repo → Settings → Pages → Source: GitHub Actions (required once).
+# Builds Vite to ./dist and publishes to GitHub Pages.
+# Repo → Settings → Pages → Source: GitHub Actions (once).
+# User/org Pages repo (*.github.io): assets base "/". Project Pages: "/<repo>/".
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -23,6 +24,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -32,8 +36,19 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Lint
+        run: npm run lint
+
       - name: Build
-        run: npm run build
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
+          if [[ "$REPO_NAME" == *.github.io ]]; then
+            export VITE_BASE_PATH=/
+          else
+            export VITE_BASE_PATH="/${REPO_NAME}/"
+          fi
+          echo "VITE_BASE_PATH=$VITE_BASE_PATH"
+          npm run build
 
       - name: Verify build output
         run: |

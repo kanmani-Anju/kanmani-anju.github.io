@@ -5,6 +5,32 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kanmani ❤️ Anju</title>
+    <!-- Instant shell: gradient + saved night mode before JS/CSS bundles load (avoids white flash + title-only moment). -->
+    <script>
+      ;(function () {
+        try {
+          if (localStorage.getItem('ka-theme-night') === 'true') {
+            document.documentElement.classList.add('dark')
+          }
+        } catch (e) {}
+      })()
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+        min-height: 100%;
+        min-height: 100svh;
+        background: linear-gradient(to bottom right, #fff0f5, #ffd6e8, #e8d9ff);
+      }
+      html.dark {
+        background: linear-gradient(to bottom right, #020617, #1a0a1f, #0f172a);
+      }
+      body {
+        margin: 0;
+        min-height: 100%;
+        min-height: 100svh;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

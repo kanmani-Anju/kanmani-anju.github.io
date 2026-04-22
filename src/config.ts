@@ -29,8 +29,11 @@ export const COPY = {
   memoriesTitle: 'Moments that already mean a lot',
   galleryTitle: 'Photos & little snapshots',
   /** Caption under empty polaroid frames (no photo yet) */
-  galleryWaitingCaption: 'Waiting to capture the best moment ✨',
-  loveMeterNote: 'How much I adore you — yes, it’s a lot 😊',
+  galleryWaitingCaption: 'Waiting to capture with you ✨',
+  /** Love meter — sun / moon metaphor (she’s the moon, you’re the sun) */
+  loveMeterTitle: 'I’m your sun ☀️ · You’re my moon 🌙',
+  loveMeterNote:
+    'Just like you said — I’m the sun, you’re the moon, and we light up the same sky. How much I adore you — yes, it’s a lot 😊',
   quoteDateLabel: 'Today’s quote',
   quoteNextButton: 'When is the next quote?',
   quoteWaitTitle: 'Kanmani 💕',

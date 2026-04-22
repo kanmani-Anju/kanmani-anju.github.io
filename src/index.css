@@ -5,11 +5,17 @@
 @tailwind utilities;
 
 @layer base {
+  /* Matches index.html shell + App gradients so theme stays seamless after hydration */
   html {
     @apply scroll-smooth;
+    background: linear-gradient(to bottom right, #fff0f5, #ffd6e8, #e8d9ff);
+  }
+  html.dark {
+    background: linear-gradient(to bottom right, #020617, #1a0a1f, #0f172a);
   }
   body {
     @apply m-0 min-h-svh font-sans text-slate-800 antialiased;
+    background: transparent;
   }
 }
 

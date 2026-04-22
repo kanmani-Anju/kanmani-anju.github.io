@@ -171,6 +171,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    document.documentElement.classList.toggle('dark', isNight)
+  }, [isNight])
+
+  useEffect(() => {
     return () => {
       if (quoteWaitCloseTimer.current) clearTimeout(quoteWaitCloseTimer.current)
       if (celebrateNamesTimer.current) clearTimeout(celebrateNamesTimer.current)
@@ -344,7 +348,9 @@ export default function App() {
       role="presentation"
       onClick={onPageClick}
       className={`relative min-h-svh overflow-x-hidden transition-colors duration-700 ${
-        isNight ? 'dark bg-gradient-to-br from-slate-950 via-[#1a0a1f] to-slate-900 text-slate-100' : 'bg-gradient-to-br from-love-blush via-love-pink to-love-lilac text-slate-800'
+        isNight
+          ? 'bg-gradient-to-br from-slate-950 via-[#1a0a1f] to-slate-900 text-slate-100'
+          : 'bg-gradient-to-br from-love-blush via-love-pink to-love-lilac text-slate-800'
       }`}
     >
       <FloatingBackdrop isNight={isNight} />
@@ -357,24 +363,27 @@ export default function App() {
         <CupidSide isNight={isNight} />
         <motion.div
           className="relative z-10 mx-auto max-w-2xl"
-          initial="hidden"
-          animate="show"
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: 0.09, delayChildren: 0.06 },
-            },
-          }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Tiny floating accents — pointer-events none */}
           <span className="pointer-events-none absolute inset-0 overflow-visible" aria-hidden>
-            {[
-              { e: '💕', l: '8%', t: '12%', d: 2.8, r: [-4, 4] as [number, number] },
-              { e: '✨', l: '88%', t: '8%', d: 3.2, r: [6, -6] as [number, number] },
-              { e: '🌸', l: '4%', t: '62%', d: 3.5, r: [5, -5] as [number, number] },
-              { e: '💖', l: '92%', t: '55%', d: 2.6, r: [-6, 6] as [number, number] },
-            ].map((x, i) => (
+            {(
+              isNight
+                ? [
+                    { e: '⭐', l: '8%', t: '12%', d: 2.8, r: [-4, 4] as [number, number] },
+                    { e: '✨', l: '88%', t: '8%', d: 3.2, r: [6, -6] as [number, number] },
+                    { e: '💫', l: '4%', t: '62%', d: 3.5, r: [5, -5] as [number, number] },
+                    { e: '🌟', l: '92%', t: '55%', d: 2.6, r: [-6, 6] as [number, number] },
+                  ]
+                : [
+                    { e: '💕', l: '8%', t: '12%', d: 2.8, r: [-4, 4] as [number, number] },
+                    { e: '✨', l: '88%', t: '8%', d: 3.2, r: [6, -6] as [number, number] },
+                    { e: '🌸', l: '4%', t: '62%', d: 3.5, r: [5, -5] as [number, number] },
+                    { e: '💖', l: '92%', t: '55%', d: 2.6, r: [-6, 6] as [number, number] },
+                  ]
+            ).map((x, i) => (
               <motion.span
                 key={i}
                 className="absolute text-lg opacity-70 sm:text-xl"
@@ -397,62 +406,49 @@ export default function App() {
             ))}
           </span>
 
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 10, scale: 0.92 },
-              show: {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                transition: { type: 'spring', stiffness: 420, damping: 24 },
-              },
-            }}
-            className={`relative mb-2 text-xs font-semibold uppercase tracking-[0.2em] ${muted}`}
-          >
-            {BRAND}
-          </motion.p>
+          <p className={`relative mb-2 text-xs font-semibold uppercase tracking-[0.2em] ${muted}`}>{BRAND}</p>
 
-          <motion.h1
-            variants={{
-              hidden: { opacity: 0, y: 22, scale: 0.9 },
-              show: {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                transition: { type: 'spring', stiffness: 260, damping: 20 },
-              },
-            }}
-            className="font-display relative text-4xl font-bold drop-shadow-sm sm:text-5xl md:text-6xl"
-          >
-            {SITE.title}
-          </motion.h1>
+          <div className="relative mx-auto max-w-3xl px-7 sm:px-12">
+            {isNight ? (
+              <>
+                <span
+                  className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 select-none text-3xl drop-shadow-[0_0_14px_rgba(251,191,36,0.4)] sm:left-1 sm:text-4xl"
+                  aria-hidden
+                >
+                  🌙
+                </span>
+                <motion.span
+                  className="pointer-events-none absolute right-[5%] top-0 text-base sm:text-lg"
+                  aria-hidden
+                  animate={{ opacity: [0.35, 1, 0.35], scale: [0.92, 1.08, 0.92] }}
+                  transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  ✨
+                </motion.span>
+                <motion.span
+                  className="pointer-events-none absolute left-[12%] -top-2 text-sm"
+                  aria-hidden
+                  animate={{ opacity: [0.45, 1, 0.45] }}
+                  transition={{ duration: 3.1, repeat: Infinity, ease: 'easeInOut', delay: 0.35 }}
+                >
+                  ⭐
+                </motion.span>
+                <motion.span
+                  className="pointer-events-none absolute right-[16%] -bottom-1 text-xs text-amber-100/90"
+                  aria-hidden
+                  animate={{ opacity: [0.4, 0.95, 0.4] }}
+                  transition={{ duration: 2.65, repeat: Infinity, ease: 'easeInOut', delay: 0.7 }}
+                >
+                  ✦
+                </motion.span>
+              </>
+            ) : null}
+            <h1 className="font-display relative text-4xl font-bold drop-shadow-sm sm:text-5xl md:text-6xl">{SITE.title}</h1>
+          </div>
 
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 14 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { type: 'spring', stiffness: 320, damping: 26 },
-              },
-            }}
-            className={`relative mx-auto mt-3 max-w-md text-base font-medium sm:text-lg ${muted}`}
-          >
-            {SITE.subtitle}
-          </motion.p>
+          <p className={`relative mx-auto mt-3 max-w-md text-base font-medium sm:text-lg ${muted}`}>{SITE.subtitle}</p>
 
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, scale: 0.85, y: 12 },
-              show: {
-                opacity: 1,
-                scale: 1,
-                y: 0,
-                transition: { type: 'spring', stiffness: 400, damping: 18 },
-              },
-            }}
-            className="relative mt-4 inline-block"
-          >
+          <div className="relative mt-4 inline-block">
             <motion.p
               className="rounded-full bg-white/40 px-4 py-2 text-sm font-semibold shadow-md backdrop-blur-md dark:bg-white/10"
               animate={{
@@ -466,19 +462,9 @@ export default function App() {
             >
               {greeting}
             </motion.p>
-          </motion.div>
+          </div>
 
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { type: 'spring', stiffness: 360, damping: 22 },
-              },
-            }}
-            className="relative mt-6 flex flex-wrap items-center justify-center gap-3"
-          >
+          <div className="relative mt-6 flex flex-wrap items-center justify-center gap-3">
             <motion.button
               type="button"
               data-no-heart
@@ -494,7 +480,7 @@ export default function App() {
             >
               {isNight ? 'Cute Mode 💖' : 'Night Mode 🌙'}
             </motion.button>
-          </motion.div>
+          </div>
         </motion.div>
       </header>
 
@@ -583,17 +569,56 @@ export default function App() {
           </div>
         </section>
 
-        <section className={`p-6 ${glass}`}>
-          <p className="text-center font-bold">How much you mean to me ♾️</p>
-          <div className="mt-3 h-4 overflow-hidden rounded-full bg-white/40 dark:bg-white/10">
-            <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-love-rose via-love-peach to-purple-400 shadow-glow"
-              initial={{ width: '92%' }}
-              animate={{ width: '100%' }}
-              transition={{ type: 'spring', stiffness: 40, damping: 14 }}
-            />
+        <section className={`relative overflow-hidden p-6 sm:p-8 ${glass}`}>
+          <div
+            className="pointer-events-none absolute inset-0 opacity-90"
+            aria-hidden
+          >
+            <div className="absolute -left-[20%] top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-amber-400/25 blur-3xl dark:bg-amber-300/20" />
+            <div className="absolute -right-[15%] top-1/2 h-44 w-44 -translate-y-1/2 rounded-full bg-indigo-400/20 blur-3xl dark:bg-violet-400/25" />
           </div>
-          <p className={`mt-2 text-center text-sm ${muted}`}>{COPY.loveMeterNote}</p>
+          <div className="relative flex flex-col items-center gap-4">
+            <p className="font-display text-center text-lg font-bold leading-snug sm:text-xl md:text-2xl">
+              {COPY.loveMeterTitle}
+            </p>
+            <p className={`max-w-md text-center text-xs font-semibold uppercase tracking-[0.18em] ${muted}`}>
+              How much you mean to me ♾️
+            </p>
+            <div className="flex w-full max-w-lg items-center gap-2 sm:gap-4">
+              <motion.span
+                className="select-none text-3xl drop-shadow-[0_0_12px_rgba(251,191,36,0.55)] sm:text-4xl"
+                aria-hidden
+                animate={{ scale: [1, 1.12, 1], rotate: [0, -4, 0] }}
+                transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                ☀️
+              </motion.span>
+              <div className="relative min-w-0 flex-1">
+                <div className="h-4 overflow-hidden rounded-full bg-white/45 shadow-inner dark:bg-white/10">
+                  <motion.div
+                    className="relative h-full rounded-full bg-gradient-to-r from-amber-300 via-love-rose to-indigo-400 shadow-[0_0_20px_rgba(251,191,36,0.35)] dark:from-amber-200/90 dark:via-fuchsia-400/90 dark:to-violet-400/90"
+                    initial={{ width: '92%' }}
+                    animate={{ width: '100%' }}
+                    transition={{ type: 'spring', stiffness: 40, damping: 14 }}
+                  >
+                    <span className="pointer-events-none absolute inset-y-0 right-1 flex items-center text-[10px] opacity-80">
+                      ✨
+                    </span>
+                  </motion.div>
+                </div>
+                <p className={`mt-1 text-center text-[10px] font-medium ${muted}`}>daylight → twilight → forever</p>
+              </div>
+              <motion.span
+                className="select-none text-3xl drop-shadow-[0_0_14px_rgba(167,139,250,0.45)] sm:text-4xl"
+                aria-hidden
+                animate={{ y: [0, -3, 0], opacity: [0.88, 1, 0.88] }}
+                transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                🌙
+              </motion.span>
+            </div>
+            <p className={`max-w-md text-center text-sm leading-relaxed ${muted}`}>{COPY.loveMeterNote}</p>
+          </div>
         </section>
 
         <section className={`flex flex-wrap justify-center gap-3 p-4 ${glass}`}>
@@ -658,7 +683,19 @@ export default function App() {
                 transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
                 className="w-44 shrink-0 sm:w-52"
               >
-                <div className="rounded-sm bg-white p-3 pb-10 shadow-xl ring-1 ring-black/5 dark:bg-slate-100">
+                <div className="relative rounded-sm bg-white p-3 pb-10 shadow-xl ring-1 ring-black/5 dark:bg-slate-100">
+                  <span
+                    className="pointer-events-none absolute -left-0.5 top-1 z-10 -rotate-[18deg] select-none text-lg leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] sm:text-xl"
+                    aria-hidden
+                  >
+                    💖
+                  </span>
+                  <span
+                    className="pointer-events-none absolute -right-0.5 top-2 z-10 rotate-[22deg] select-none text-lg leading-none drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] sm:text-xl"
+                    aria-hidden
+                  >
+                    ➷
+                  </span>
                   {g.src ? (
                     <img
                       src={g.src.startsWith('http') ? g.src : `${base}${g.src}`}
@@ -948,7 +985,19 @@ function FloatingBackdrop({ isNight }: { isNight: boolean }) {
             animationDelay: h.delay,
           }}
         >
-          {h.id % 3 === 0 ? '💕' : h.id % 3 === 1 ? '✨' : '🌸'}
+          {isNight
+            ? h.id % 4 === 0
+              ? '⭐'
+              : h.id % 4 === 1
+                ? '✨'
+                : h.id % 4 === 2
+                  ? '🌟'
+                  : '💫'
+            : h.id % 3 === 0
+              ? '💕'
+              : h.id % 3 === 1
+                ? '✨'
+                : '🌸'}
         </span>
       ))}
       {Array.from({ length: 20 }, (_, i) => (
