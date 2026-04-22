@@ -116,10 +116,12 @@ function CupidSideComponent({ isNight }: Props) {
     }
   }, [reduceMotion])
 
-  const dim = isNight ? 'max-sm:opacity-45 sm:opacity-42' : 'max-sm:opacity-95 sm:opacity-95'
+  /** Night: keep cupid + drop-shadow glow visible on small screens (low opacity was washing out the glow). */
+  const dim = isNight ? 'max-sm:opacity-95 sm:opacity-42' : 'max-sm:opacity-95 sm:opacity-95'
   const base = freeze ?? anchor
   const path = tourPath()
   const touring = freeze !== null
+  const nightGlowMotion = isNight && !reduceMotion
 
   const cupidInner = (
     <motion.div
@@ -151,19 +153,65 @@ function CupidSideComponent({ isNight }: Props) {
         transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
       >
         <motion.div
-          className="relative drop-shadow-[0_6px_16px_rgba(255,130,170,0.4)]"
-          animate={{
-            x: [0, -5, 0],
-            scale: [1, 0.97, 1],
-            opacity: [1, 0.85, 1],
-          }}
-          transition={{
-            duration: FLIGHT_MS / 1000,
-            repeat: Infinity,
-            repeatDelay: PAUSE_MS / 1000,
-            ease: 'easeInOut',
-            times: [0, 0.22, 1],
-          }}
+          className={
+            isNight
+              ? reduceMotion
+                ? 'relative drop-shadow-[0_0_22px_rgba(251,113,133,0.65)] drop-shadow-[0_0_48px_rgba(192,132,252,0.45)]'
+                : 'relative'
+              : 'relative drop-shadow-[0_6px_16px_rgba(255,130,170,0.4)]'
+          }
+          animate={
+            nightGlowMotion
+              ? {
+                  filter: [
+                    'drop-shadow(0 0 14px rgba(251,113,133,0.55)) drop-shadow(0 0 38px rgba(192,132,252,0.4))',
+                    'drop-shadow(0 0 26px rgba(251,113,133,0.85)) drop-shadow(0 0 58px rgba(244,114,182,0.55))',
+                    'drop-shadow(0 0 14px rgba(251,113,133,0.55)) drop-shadow(0 0 38px rgba(192,132,252,0.4))',
+                  ],
+                  x: [0, -5, 0],
+                  scale: [1, 0.97, 1],
+                  opacity: [1, 0.85, 1],
+                }
+              : {
+                  x: [0, -5, 0],
+                  scale: [1, 0.97, 1],
+                  opacity: [1, 0.85, 1],
+                }
+          }
+          transition={
+            nightGlowMotion
+              ? {
+                  filter: { duration: 2.6, repeat: Infinity, ease: 'easeInOut', times: [0, 0.5, 1] },
+                  x: {
+                    duration: FLIGHT_MS / 1000,
+                    repeat: Infinity,
+                    repeatDelay: PAUSE_MS / 1000,
+                    ease: 'easeInOut',
+                    times: [0, 0.22, 1],
+                  },
+                  scale: {
+                    duration: FLIGHT_MS / 1000,
+                    repeat: Infinity,
+                    repeatDelay: PAUSE_MS / 1000,
+                    ease: 'easeInOut',
+                    times: [0, 0.22, 1],
+                  },
+                  opacity: {
+                    duration: FLIGHT_MS / 1000,
+                    repeat: Infinity,
+                    repeatDelay: PAUSE_MS / 1000,
+                    ease: 'easeInOut',
+                    times: [0, 0.22, 1],
+                  },
+                }
+              : {
+                  duration: FLIGHT_MS / 1000,
+                  repeat: Infinity,
+                  repeatDelay: PAUSE_MS / 1000,
+                  ease: 'easeInOut',
+                  times: [0, 0.22, 1],
+                }
+          }
         >
           <svg
             viewBox="0 0 120 210"
