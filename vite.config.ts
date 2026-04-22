@@ -16,4 +16,8 @@ function githubPagesBase(): string {
 export default defineConfig({
   plugins: [react()],
   base: githubPagesBase(),
+  build: {
+    /** Smaller, faster output on modern browsers (mobile + desktop) */
+    target: 'es2022',
+  },
 })
