@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react'
 
 /**
  * GitHub Pages asset base:
- * - User/org site (`<name>.github.io` repo): base MUST be `/` → https://kanmani-anju.github.io/
- * - Project site (`/<repo>/`): set `VITE_BASE_PATH=/<repo>/` or `vite build --base=/<repo>/`
- * - `npm run dev` → base `/`
+ * - User/org site (repo name ends with .github.io): base is "/" e.g. kanmani-anju.github.io
+ * - Project site: set VITE_BASE_PATH=/<repo>/ or vite build --base=/<repo>/
  */
 function githubPagesBase(): string {
   const raw = process.env.VITE_BASE_PATH?.trim()

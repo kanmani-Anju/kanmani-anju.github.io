@@ -1,5 +1,5 @@
-# GitHub Pages — enable: Repo Settings → Pages → Source: GitHub Actions.
-# First run: Settings → Environments → github-pages → required reviewers (optional).
+# GitHub Pages: Settings - Pages - Build and deployment - Source: GitHub Actions
+# First deploy: Settings - Environments - github-pages (approve if prompted)
 
 name: Deploy to GitHub Pages
 
