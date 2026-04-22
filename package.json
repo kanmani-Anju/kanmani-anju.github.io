@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "preview:gh": "vite preview --base=/",
     "deploy": "npm run build:gh && gh-pages -d dist",
+    "git:diagnose": "powershell -ExecutionPolicy Bypass -File ./scripts/diagnose-push.ps1",
     "lint": "eslint ."
   },
   "dependencies": {
