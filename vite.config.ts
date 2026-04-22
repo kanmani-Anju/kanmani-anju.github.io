@@ -19,5 +19,14 @@ export default defineConfig({
   build: {
     /** Smaller, faster output on modern browsers (mobile + desktop) */
     target: 'es2022',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules/framer-motion')) return 'motion'
+          if (id.includes('node_modules/react-dom')) return 'react-dom'
+          if (id.includes('node_modules/react/')) return 'react'
+        },
+      },
+    },
   },
 })

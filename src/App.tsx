@@ -1,6 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import confetti from 'canvas-confetti'
 import {
   BRAND,
   CELEBRATE_TAP_RESET_MS,
@@ -19,6 +18,7 @@ import { SURPRISE_NOTES, WHY_REASONS } from './data/messages'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import { CupidSide } from './components/CupidSide'
 import { RoseAndKiss } from './components/RoseAndKiss'
+import { fireConfetti, preloadConfetti } from './utils/confettiLazy'
 import { IST_TIMEZONE, istCalendarDateKey } from './utils/istCalendar'
 
 const LS_THEME = 'ka-theme-night'
@@ -167,6 +167,10 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    preloadConfetti()
+  }, [])
+
+  useEffect(() => {
     return () => {
       if (quoteWaitCloseTimer.current) clearTimeout(quoteWaitCloseTimer.current)
       if (celebrateNamesTimer.current) clearTimeout(celebrateNamesTimer.current)
@@ -199,9 +203,9 @@ export default function App() {
       ticks: 90,
       colors: ['#ff8fab', '#ffd6e8', '#e8d9ff', '#ffc8dd', '#fff0f5'],
     }
-    confetti({ ...bloom, origin: { x: 0.45, y: 0.48 } })
+    fireConfetti({ ...bloom, origin: { x: 0.45, y: 0.48 } })
     window.setTimeout(() => {
-      confetti({ ...bloom, particleCount: 35, origin: { x: 0.55, y: 0.52 }, spread: 65 })
+      fireConfetti({ ...bloom, particleCount: 35, origin: { x: 0.55, y: 0.52 }, spread: 65 })
     }, 120)
 
     quoteWaitCloseTimer.current = window.setTimeout(() => {
@@ -251,13 +255,13 @@ export default function App() {
     setCelebrateShowNames(false)
     setCelebrateOpen(true)
 
-    confetti({
+    fireConfetti({
       particleCount: 130,
       spread: 88,
       origin: { y: 0.55 },
       colors: ['#ff8fab', '#ffd6e8', '#e8d9ff', '#ffd4c4', '#fff'],
     })
-    confetti({
+    fireConfetti({
       particleCount: 90,
       spread: 100,
       startVelocity: 38,
@@ -265,7 +269,7 @@ export default function App() {
       colors: ['#fbcfe8', '#fce7f3', '#fda4af'],
       scalar: 1,
     })
-    confetti({
+    fireConfetti({
       particleCount: 90,
       spread: 100,
       startVelocity: 38,
@@ -292,7 +296,7 @@ export default function App() {
 
     celebrateTaps.current += 1
     if (celebrateTaps.current < CELEBRATE_TAPS_REQUIRED) {
-      confetti({
+      fireConfetti({
         particleCount: 28,
         spread: 52,
         startVelocity: 18,

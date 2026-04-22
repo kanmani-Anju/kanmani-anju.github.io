@@ -5,16 +5,23 @@ import { ErrorBoundary } from './ErrorBoundary'
 import './index.css'
 import App from './App.tsx'
 
-console.log(
-  '%cKanmani ❤️ Anju',
-  'color:#e879a9;font-weight:bold;font-size:14px',
-  '| boot OK | base:',
-  import.meta.env.BASE_URL,
-  '| mode:',
-  import.meta.env.MODE,
-)
+if (import.meta.env.DEV) {
+  console.log(
+    '%cKanmani ❤️ Anju',
+    'color:#e879a9;font-weight:bold;font-size:14px',
+    '| boot OK | base:',
+    import.meta.env.BASE_URL,
+    '| mode:',
+    import.meta.env.MODE,
+  )
+}
 
-createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root')
+if (!rootEl) {
+  throw new Error('Missing #root element')
+}
+
+createRoot(rootEl).render(
   <StrictMode>
     <ErrorBoundary>
       <LazyMotion features={domAnimation}>

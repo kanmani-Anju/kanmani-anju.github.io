@@ -1,8 +1,8 @@
 import { memo, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
-import confetti from 'canvas-confetti'
 import { COPY, ROSE_KISSES_FOR_FULL_BLOOM } from '../config'
 import { useLocalStorage } from '../hooks/useLocalStorage'
+import { fireConfetti } from '../utils/confettiLazy'
 import { istCalendarDateKey } from '../utils/istCalendar'
 
 const LS_LAST_KISS = 'ka-last-kiss-ist'
@@ -174,7 +174,7 @@ function RoseAndKissComponent({ glass, muted }: Props) {
     if (nextTotal === ROSE_KISSES_FOR_FULL_BLOOM) {
       setPotPulseKey((k) => k + 1)
       const burst = () => {
-        confetti({
+        fireConfetti({
           particleCount: 120,
           spread: 360,
           startVelocity: 35,
@@ -188,7 +188,7 @@ function RoseAndKissComponent({ glass, muted }: Props) {
       window.setTimeout(burst, 180)
       window.setTimeout(burst, 360)
       window.setTimeout(() => {
-        confetti({
+        fireConfetti({
           particleCount: 80,
           spread: 100,
           startVelocity: 28,
@@ -209,7 +209,7 @@ function RoseAndKissComponent({ glass, muted }: Props) {
     const colors = [...KISS_PALETTES[paletteIndex]]
     const nx = cx / window.innerWidth
     const ny = cy / window.innerHeight
-    confetti({
+    fireConfetti({
       particleCount: 42,
       spread: 58,
       startVelocity: 24,
@@ -218,7 +218,7 @@ function RoseAndKissComponent({ glass, muted }: Props) {
       scalar: 0.8,
     })
     window.requestAnimationFrame(() => {
-      confetti({
+      fireConfetti({
         particleCount: 28,
         spread: 64,
         startVelocity: 18,
