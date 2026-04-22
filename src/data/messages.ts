@@ -1,0 +1,48 @@
+export const SURPRISE_NOTES: string[] = [
+  'You’re my favorite kind of forever.',
+  'If I had one wish, it’d be more Tuesdays with you.',
+  'I’m proud of you—even when you’re just existing.',
+  'You make “I love you” feel small compared to what I feel.',
+  'I’d choose you in every timeline.',
+  'You’re the reason my heart has a favorite song.',
+  'I love you in messy hair and sleepy voice mode too.',
+  'You’re my comfort, my chaos, my calm.',
+  'If hugs were currency, I’d be broke—and happy.',
+  'You’re my softest thought on hard days.',
+  'I still get butterflies. Every time.',
+  'You’re my “read that text twice” person.',
+  'I love you beyond punctuation.',
+  'You’re my favorite notification and my favorite silence.',
+  'If love is a language, you’re my mother tongue.',
+]
+
+export const FUNNY_LINES: string[] = [
+  'I love you more than biriyani 🍗❤️',
+  'You stole my heart… and my sleep 😴💖',
+  'If loving you was a job, I’d be CEO 😎💘',
+  'You’re the reason my phone battery dies happily.',
+  'I’d share fries—but only the good ones. Okay, all of them.',
+  'You’re my favorite distraction from being productive.',
+  'I love you even when you steal the blanket.',
+  'Relationship status: committed… to snacks and you.',
+  'You’re my favorite “one more episode” partner.',
+  'I’d fight a mosquito for you. That’s love.',
+]
+
+export const WHY_REASONS: string[] = [
+  'Because your smile fixes everything 💖',
+  'Because you are my peace 🌸',
+  'Because you make ordinary days sparkle ✨',
+  'Because you listen like it matters—because it does',
+  'Because you’re brave and soft at the same time',
+  'Because your laugh is my favorite sound',
+  'Because you see me—and still stay',
+  'Because you make “home” a feeling, not a place',
+  'Because you’re kind in the small moments',
+  'Because you’re my favorite plot twist',
+  'Because you make effort look effortless',
+  'Because you’re cute when you’re grumpy too',
+  'Because you dream out loud with me',
+  'Because you’re my calm and my storm—in the best way',
+  'Because you’re simply… you',
+]
